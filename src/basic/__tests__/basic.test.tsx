@@ -5,7 +5,7 @@ import { describe, expect, test } from 'vitest';
 import { useCart } from '@/refactoring/entity/cart/hooks/useCart';
 import * as cartUtils from '@/refactoring/entity/cart/utils/cart';
 import { useCoupons } from '@/refactoring/entity/coupon/hooks/useCoupon';
-import { useProducts } from '@/refactoring/hooks';
+import { useProducts } from '@/refactoring/entity/product/hooks/useProduct';
 import { AdminPage } from '@/refactoring/pages/AdminPage';
 import { CartPage } from '@/refactoring/pages/CartPage';
 import type { CartItem, Coupon, Product } from '@/types';
