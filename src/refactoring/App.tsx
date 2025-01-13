@@ -1,28 +1,12 @@
 import { useState } from 'react';
 
-import type { Coupon, Product } from '../types';
 import { AdminPage } from './components/AdminPage';
 import { CartPage } from './components/CartPage';
-import { INITIAL_PRODUCTS, useCoupons, useProducts } from './hooks';
-
-const initialCoupons: Coupon[] = [
-  {
-    name: '5000원 할인 쿠폰',
-    code: 'AMOUNT5000',
-    discountType: 'amount',
-    discountValue: 5000
-  },
-  {
-    name: '10% 할인 쿠폰',
-    code: 'PERCENT10',
-    discountType: 'percentage',
-    discountValue: 10
-  }
-];
+import { INITIAL_COUPONS, INITIAL_PRODUCTS, useCoupons, useProducts } from './hooks';
 
 const App = () => {
   const { products, updateProduct, addProduct } = useProducts(INITIAL_PRODUCTS);
-  const { coupons, addCoupon } = useCoupons(initialCoupons);
+  const { coupons, addCoupon } = useCoupons(INITIAL_COUPONS);
   const [isAdmin, setIsAdmin] = useState(false);
 
   return (
