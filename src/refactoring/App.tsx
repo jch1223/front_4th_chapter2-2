@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import { AdminPage } from './components/AdminPage';
-import { CartPage } from './components/CartPage';
 import { INITIAL_COUPONS, INITIAL_PRODUCTS, useCoupons, useProducts } from './hooks';
+import { AdminPage } from './pages/AdminPage';
+import { CartPage } from './pages/CartPage';
 
 const App = () => {
   const { products, updateProduct, addProduct } = useProducts(INITIAL_PRODUCTS);
