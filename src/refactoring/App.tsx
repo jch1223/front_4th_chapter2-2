@@ -3,34 +3,7 @@ import { useState } from 'react';
 import type { Coupon, Product } from '../types';
 import { AdminPage } from './components/AdminPage';
 import { CartPage } from './components/CartPage';
-import { useCoupons, useProducts } from './hooks';
-
-const initialProducts: Product[] = [
-  {
-    id: 'p1',
-    name: '상품1',
-    price: 10000,
-    stock: 20,
-    discounts: [
-      { quantity: 10, rate: 0.1 },
-      { quantity: 20, rate: 0.2 }
-    ]
-  },
-  {
-    id: 'p2',
-    name: '상품2',
-    price: 20000,
-    stock: 20,
-    discounts: [{ quantity: 10, rate: 0.15 }]
-  },
-  {
-    id: 'p3',
-    name: '상품3',
-    price: 30000,
-    stock: 20,
-    discounts: [{ quantity: 10, rate: 0.2 }]
-  }
-];
+import { INITIAL_PRODUCTS, useCoupons, useProducts } from './hooks';
 
 const initialCoupons: Coupon[] = [
   {
@@ -48,7 +21,7 @@ const initialCoupons: Coupon[] = [
 ];
 
 const App = () => {
-  const { products, updateProduct, addProduct } = useProducts(initialProducts);
+  const { products, updateProduct, addProduct } = useProducts(INITIAL_PRODUCTS);
   const { coupons, addCoupon } = useCoupons(initialCoupons);
   const [isAdmin, setIsAdmin] = useState(false);
 
