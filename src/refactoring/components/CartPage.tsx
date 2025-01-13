@@ -1,5 +1,6 @@
 import type { CartItem, Coupon, Product } from '../../types';
 import { useCart } from '../hooks';
+import { getMaxApplicableDiscount } from '../models/cart';
 
 interface Props {
   products: Product[];
@@ -13,23 +14,18 @@ export const CartPage = ({ products, coupons }: Props) => {
     return discounts.reduce((max, discount) => Math.max(max, discount.rate), 0);
   };
 
-  const getRemainingStock = (product: Product) => {
+  const getRemainingStock = (product: Product, cart: CartItem[]) => {
     const cartItem = cart.find(item => item.product.id === product.id);
     return product.stock - (cartItem?.quantity || 0);
   };
 
   const { totalBeforeDiscount, totalAfterDiscount, totalDiscount } = calculateTotal();
 
-  const getAppliedDiscount = (item: CartItem) => {
-    const { discounts } = item.product;
-    const { quantity } = item;
-    let appliedDiscount = 0;
-    for (const discount of discounts) {
-      if (quantity >= discount.quantity) {
-        appliedDiscount = Math.max(appliedDiscount, discount.rate);
-      }
-    }
-    return appliedDiscount;
+  const handleAddToCart = (product: Product) => {
+    const remainingStock = getRemainingStock(product, cart);
+    if (remainingStock <= 0) return;
+
+    addToCart(product);
   };
 
   return (
@@ -40,7 +36,7 @@ export const CartPage = ({ products, coupons }: Props) => {
           <h2 className="mb-4 text-2xl font-semibold">상품 목록</h2>
           <div className="space-y-2">
             {products.map(product => {
-              const remainingStock = getRemainingStock(product);
+              const remainingStock = getRemainingStock(product, cart);
               return (
                 <div key={product.id} data-testid={`product-${product.id}`} className="rounded bg-white p-3 shadow">
                   <div className="mb-2 flex items-center justify-between">
@@ -67,7 +63,7 @@ export const CartPage = ({ products, coupons }: Props) => {
                     </ul>
                   )}
                   <button
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAddToCart(product)}
                     className={`w-full rounded px-3 py-1 ${
                       remainingStock > 0
                         ? 'bg-blue-500 text-white hover:bg-blue-600'
@@ -87,7 +83,8 @@ export const CartPage = ({ products, coupons }: Props) => {
 
           <div className="space-y-2">
             {cart.map(item => {
-              const appliedDiscount = getAppliedDiscount(item);
+              const appliedDiscount = getMaxApplicableDiscount(item);
+
               return (
                 <div key={item.product.id} className="flex items-center justify-between rounded bg-white p-3 shadow">
                   <div>
