@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { Product } from '../../types';
+import type { Product } from '@/types';
 
 // Q. 실무에서 여러 곳에서 사용하는 상수가 아니면 const폴더에 몰아두는 것 보다 product 관심사가 있는 이 곳에 두는 것을 선호했었는데,
 // entity 폴더를 생성해서 그 곳에 모두 모아두는 것이 좋을까요?

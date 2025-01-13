@@ -1,6 +1,6 @@
-import type { CartItem, Coupon, Product } from '../../types';
-import { useCart } from '../hooks';
-import { getMaxApplicableDiscount } from '../models/cart';
+import { useCart } from '@/refactoring/entity/cart/hooks/useCart';
+import { getMaxApplicableDiscount } from '@/refactoring/models/cart';
+import type { CartItem, Coupon, Product } from '@/types';
 
 interface Props {
   products: Product[];

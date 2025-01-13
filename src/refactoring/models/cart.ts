@@ -1,4 +1,4 @@
-import type { CartItem, Coupon } from '../../types';
+import type { CartItem, Coupon } from '@/types';
 
 const calculateItemSubTotal = (item: CartItem) => {
   const { price } = item.product;
