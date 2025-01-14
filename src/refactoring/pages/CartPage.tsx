@@ -1,4 +1,4 @@
-import { CartItem } from '@/refactoring/entity/cart/components/CartItem';
+import { CartItemList } from '@/refactoring/entity/cart/components/CartItemList';
 import { useCart } from '@/refactoring/entity/cart/hooks/useCart';
 import type { CartItem as CartItemType, Coupon, Product } from '@/types';
 
@@ -79,21 +79,7 @@ export const CartPage = ({ products, coupons }: Props) => {
           </div>
         </div>
         <div>
-          <h2 className="mb-4 text-2xl font-semibold">장바구니 내역</h2>
-
-          <div className="space-y-2">
-            {cart.map(item => {
-              return (
-                <CartItem
-                  key={item.product.id}
-                  cart={item}
-                  onIncreaseQuantity={() => updateQuantity(item.product.id, item.quantity + 1)}
-                  onDecreaseQuantity={() => updateQuantity(item.product.id, item.quantity - 1)}
-                  onRemoveCart={() => removeFromCart(item.product.id)}
-                />
-              );
-            })}
-          </div>
+          <CartItemList cart={cart} onQuantityUpdate={updateQuantity} onCartRemove={removeFromCart} />
 
           <div className="mt-6 rounded bg-white p-4 shadow">
             <h2 className="mb-2 text-2xl font-semibold">쿠폰 적용</h2>

@@ -1,16 +1,13 @@
-import React from 'react';
-
 import { getMaxApplicableDiscount } from '@/refactoring/entity/cart/utils/cart';
 import type { CartItem as CartItemType } from '@/types';
 
-interface CartItemProps {
+export interface CartItemProps {
   cart: CartItemType;
-  onIncreaseQuantity: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onDecreaseQuantity: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  onRemoveCart: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onQuantityUpdate: (productId: string, newQuantity: number) => void;
+  onCartRemove: (productId: string) => void;
 }
 
-export const CartItem = ({ cart, onIncreaseQuantity, onDecreaseQuantity, onRemoveCart }: CartItemProps) => {
+export const CartItem = ({ cart, onQuantityUpdate, onCartRemove }: CartItemProps) => {
   const appliedDiscount = getMaxApplicableDiscount(cart);
 
   return (
@@ -27,18 +24,21 @@ export const CartItem = ({ cart, onIncreaseQuantity, onDecreaseQuantity, onRemov
       </div>
       <div>
         <button
-          onClick={onDecreaseQuantity}
+          onClick={() => onQuantityUpdate(cart.product.id, cart.quantity - 1)}
           className="mr-1 rounded bg-gray-300 px-2 py-1 text-gray-800 hover:bg-gray-400"
         >
           -
         </button>
         <button
-          onClick={onIncreaseQuantity}
+          onClick={() => onQuantityUpdate(cart.product.id, cart.quantity + 1)}
           className="mr-1 rounded bg-gray-300 px-2 py-1 text-gray-800 hover:bg-gray-400"
         >
           +
         </button>
-        <button onClick={onRemoveCart} className="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600">
+        <button
+          onClick={() => onCartRemove(cart.product.id)}
+          className="rounded bg-red-500 px-2 py-1 text-white hover:bg-red-600"
+        >
           삭제
         </button>
       </div>
